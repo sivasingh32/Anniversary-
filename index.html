@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary My Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --text-light: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent-blue: #7094b8;
+            --accent-gold: #d4af37;
+            --accent-rose: #b76e79;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom Sleek Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 10px;
+        }
+
+        /* Top Bar Floating Music System */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            backdrop-filter: blur(15px);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .music-control:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Floating Navigation Indicator Panel */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .dot.active {
+            background: var(--text-light);
+            transform: scale(1.5);
+            box-shadow: 0 0 12px rgba(255,255,255,0.6);
+        }
+
+        /* Layout Architecture */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 80px 24px;
+            overflow: hidden;
+        }
+
+        /* Apple-Inspired Luxury Glassmorphism Container */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 760px;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            position: relative;
+            z-index: 5;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+
+        /* Smooth Glass Light Reflection Shimmer Effect */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
+            transform: skewX(-20deg);
+            transition: 0.8s;
+        }
+        .glass-card:hover::before {
+            left: 150%;
+        }
+
+        /* Elegant Luxury Fonts Architecture */
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        
+        .date-badge {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .story-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            line-height: 1.9;
+            color: var(--text-muted);
+            margin: 25px 0;
+            font-size: 1rem;
+            white-space: pre-line;
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-top: 25px;
+            line-height: 1.6;
+        }
+
+        /* Image Display Architecture with Premium Slow Motion Zoom Effect */
+        .img-wrapper {
+            overflow: hidden;
+            border-radius: 14px;
+            display: inline-block;
+            margin: 20px auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        
+        .premium-img {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            transition: transform 7s ease;
+        }
+        section:hover .premium-img {
+            transform: scale(1.05);
+        }
+
+        /* Abstract Layers */
+        .particles-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ----------------------------------------------------- */
+        /* UNIQUE STYLES PER COMPONENT                           */
+        /* ----------------------------------------------------- */
+
+        /* PAGE 1: HOME */
+        #home { background: #000000; }
+        #home .img-wrapper { max-width: 290px; }
+
+        /* PAGE 2: INITIAL START */
+        #page2 { background: #050505; }
+        .split-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .split-left, .split-right { flex: 1; min-width: 260px; }
+        .calendar-badge {
+            font-size: 3.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 10px rgba(112,148,184,0.1));
+        }
+
+        /* PAGE 3: INTUITION & FEELINGS */
+        #page3 {
+            background: linear-gradient(180deg, #020205 0%, #050d1a 100%);
+        }
+
+        /* PAGE 4: DEFINITIVE MOMENT ("US") */
+        #page4 {
+            background: linear-gradient(180deg, #040408 0%, #08162b 100%);
+        }
+        #page4 .img-wrapper {
+            border: 1px solid rgba(112, 148, 184, 0.35);
+            box-shadow: 0 0 30px rgba(112, 148, 184, 0.15);
+        }
+        .divider-gold {
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            margin: 25px auto;
+        }
+
+        /* PAGE 5: GESTURE (FIRST GIFT) */
+        #page5 { 
+            background: #040404; 
+        }
+        .gift-box-anim {
+            font-size: 3.5rem;
+            display: inline-block;
+            animation: softFloating 4s infinite ease-in-out;
+        }
+        @keyframes softFloating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* PAGE 6: AUDIO CALL TIMESTAMP */
+        #page6 { background: #070707; }
+        .timestamp-display {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--accent-blue);
+            letter-spacing: 2px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+
+        /* PAGE 7: TURBULENCE RESOLUTION */
+        #page7 { background: linear-gradient(180deg, #050507 0%, #040b17 100%); }
+        .heart-morphing {
+            font-size: 3rem;
+            display: inline-block;
+            transition: all 0.8s ease;
+        }
+
+        /* PAGE 8: COMMEMORATION & FORWARD LOOK */
+        #page8 { background: #000000; }
+        .chapter-title { 
+            font-size: 0.8rem; 
+            letter-spacing: 5px; 
+            text-transform: uppercase; 
+            color: var(--accent-rose); 
+            margin-bottom: 20px; 
+            font-weight: 500;
+        }
+        .video-container {
+            margin-top: 40px; 
+            border-top: 1px solid var(--glass-border); 
+            padding-top: 35px;
+        }
+        .video-element {
+            width: 100%; 
+            max-width: 520px; 
+            border-radius: 12px; 
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            background: #000;
+        }
+
+        /* REUSABLE FOOTER ELEMENT */
+        .bottom-tag {
+            margin-top: 45px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            line-height: 1.8;
+        }
+
+        /* BONUS SEGMENT */
+        #bonus-page {
+            background: #000000;
+        }
+
+        /* Responsive Layout Optimization */
+        @media (max-width: 768px) {
+            .glass-card { padding: 35px 20px; }
+            .story-text { font-size: 0.95rem; line-height: 1.8; text-align: center; text-align-last: center;}
+            .nav-dots { display: none; }
+            .split-layout { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" src="tere-liye.mp3" loop></audio>
+
+    <div class="music-control" onclick="toggleMusic()">
+        <span id="music-icon">🎵</span> <span id="music-text">Play Song</span>
+    </div>
+
+    <div class="nav-dots">
+        <div class="dot active" onclick="jumpToSection('home', 0)"></div>
+        <div class="dot" onclick="jumpToSection('page2', 1)"></div>
+        <div class="dot" onclick="jumpToSection('page3', 2)"></div>
+        <div class="dot" onclick="jumpToSection('page4', 3)"></div>
+        <div class="dot" onclick="jumpToSection('page5', 4)"></div>
+        <div class="dot" onclick="jumpToSection('page6', 5)"></div>
+        <div class="dot" onclick="jumpToSection('page7', 6)"></div>
+        <div class="dot" onclick="jumpToSection('page8', 7)"></div>
+        <div class="dot" onclick="jumpToSection('bonus-page', 8)"></div>
+    </div>
+
+    <section id="home">
+        <div class="glass-card">
+            <div class="img-wrapper">
+                <img src="priya1.jpg" alt="Priya Best Smile" class="premium-img">
+            </div>
+            <div class="bottom-tag">
+                Made With Love<br><br>By<br><br><span style="color: var(--text-light); font-weight: 500; letter-spacing: 4px;">Ansh ❤️</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="page2">
+        <div class="glass-card">
+            <div class="date-badge">18 July 2025</div>
+            <h2>How It All Started ❤️</h2>
+            
+            <div class="split-layout">
+                <div class="split-left">
+                    <div class="calendar-badge">📅</div>
+                    <p style="font-size: 1.1rem; letter-spacing: 1px; font-weight: 500;">18 July 2025</p>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 6px; letter-spacing: 1px;">The Day Everything Began...</p>
+                </div>
+                <div class="split-right">
+                    <div class="img-wrapper">
+                        <img src="priya2.jpg" alt="Priya Smile Natural" class="premium-img">
+                    </div>
+                </div>
+            </div>
+
+            <p class="story-text">
+                Every beautiful story has a beginning...
+                Ours started with a simple Instagram message.
+                Us waqt mujhe bilkul bhi nahi pata tha ki ek chhota sa "Hi" meri life ki direction badal dega.
+                Na mujhe future ka pata tha...
+                Na ye ki tum meri life ka itna important part ban jaogi.
+                Bas ek normal conversation shuru hui...
+                Aur dheere-dheere...
+                Tum meri daily routine ka hissa ban gayi.
+                Us din shayad sirf ek message bheja tha...
+                Lekin aaj jab peeche mudkar dekhta hoon...
+                To lagta hai...
+                Wahi message meri life ka sabse sahi decision tha. ❤️
+            </p>
+            <div class="quote">"Every journey starts with one small step..."</div>
+        </div>
+    </section>
+
+    <section id="page3">
+        <canvas class="particles-layer" id="subtle-hearts-canvas"></canvas>
+        <div class="glass-card">
+            <div class="date-badge">20 July 2025</div>
+            <h2>When Feelings Started ❤️</h2>
+            
+            <div class="img-wrapper">
+                <img src="priya3.jpg" alt="Priya Candid" class="premium-img">
+            </div>
+
+            <p class="story-text">
+                Kabhi-kabhi...
+                Pyaar ek hi din me nahi hota.
+                Wo dheere-dheere...
+                Har conversation ke saath...
+                Har smile ke saath...
+                Har "Take Care" ke saath badhta hai.
+                Aur shayad...
+                20 July wahi din tha...
+                Jab mujhe ehsaas hua ki tum mere liye sirf ek Instagram friend nahi rahi.
+                Tumhari notification dekhkar smile aa jaati thi.
+                Tumhare message ka wait rehne laga tha.
+                Aur bina samjhe hi...
+                Mera dil tumhari taraf badhne laga tha.
+                Us din shayad humne kuch special nahi kiya tha...
+                Lekin mere liye...
+                Wo din bahut special tha.
+                Kyuki us din mujhe samajh aa gaya tha...
+                Ki meri life me ek bahut important insaan aa chuka hai. ❤️
+            </p>
+            <div class="date-badge" style="margin-top: 15px; font-size: 0.8rem; color: var(--text-muted);">The Day My Heart Started Choosing You.</div>
+            <div class="quote">"Sometimes love doesn't arrive loudly... it quietly becomes part of your everyday life."</div>
+        </div>
+    </section>
+
+    <section id="page4">
+        <div class="glass-card">
+            <div class="chapter-title" style="color: var(--accent-blue);">❤️ The Day We Became "Us"</div>
+            <div class="date-badge">21 July 2025</div>
+            
+            <div style="position: relative; margin-top: 10px;">
+                <div class="img-wrapper">
+                    <img src="priya4.jpg" alt="Priya Exceptional Smile" class="premium-img">
+                </div>
+                <p style="font-family: 'Cinzel', serif; font-size: 1rem; margin-top: 15px; letter-spacing: 2px;">
+                    The Day You Said...<br><span style="color: var(--accent-rose); font-weight: 600;">"I Love You." ❤️</span>
+                </p>
+            </div>
+
+            <div class="divider-gold"></div>
+
+            <p class="story-text">
+                There are some dates...
+                That never fade away.
+                For me...
+                21 July 2025 will always be one of them.
+                Because this wasn't just another day...
+                This was the day our story truly began.
+                The day...
+                You said those three beautiful words...
+                "I Love You." ❤️
+                I still remember the happiness I felt that day.
+                It wasn't because I had found someone perfect...
+                It was because I had found someone who made my ordinary days feel special.
+                From that day...
+                Every "Good Morning" became more meaningful.
+                Every "Take Care" felt more precious.
+                Every conversation became a memory.
+                And slowly...
+                You became the person I wanted to share everything with.
+                Looking back today...
+                I can proudly say...
+                Choosing you was one of the most beautiful things that ever happened to me.
+                Thank you...
+                For becoming my partner...
+                My happiness...
+                And the most beautiful chapter of my life. ❤️
+            </p>
+            
+            <div class="quote" style="font-size: 1.1rem; color: var(--accent-blue); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
+                "There are some dates... that never fade away. 21 July 2025 will always be my favourite."
+            </div>
+            <div class="bottom-tag" style="color: var(--accent-gold); font-weight: 500; margin-top: 30px;">❤️ Forever Started Here ❤️</div>
+        </div>
+    </section>
+
+    <section id="page5">
+        <canvas class="particles-layer" id="gold-particles-canvas"></canvas>
+        <div class="glass-card">
+            <div class="date-badge">26 September 2025</div>
+            <h2>🎁 Our First Gift</h2>
+            
+            <div style="margin-top: 15px;">
+                <div class="gift-box-anim">🎁</div>
+                <br>
+                <div class="img-wrapper" style="margin-top: 15px;">
+                    <img src="gift.jpg" alt="Priceless Dress or Gift Screenshot" class="premium-img">
+                </div>
+                <p style="font-family: 'Cinzel', serif; font-size: 0.9rem; margin-top: 10px; color: var(--accent-gold); letter-spacing: 2px;">Our First Gift</p>
+            </div>
+
+            <p class="story-text">
+                Some gifts are expensive...
+                Some gifts are priceless.
+                Our first gift was never about the dress...
+                It was about the feeling behind it.
+                It was the first time I wanted to make you smile with something that would remind you of me.
+                Seeing you happy...
+                Has always been one of my favourite feelings.
+                That gift was small...
+                But the love behind it was endless.
+                Whenever I think about it...
+                I don't remember the price...
+                I remember the excitement.
+                I remember the happiness.
+                And I remember the smile I wished to see on your face.
+                Because...
+                Your smile has always been the most beautiful gift for me. ❤️
+            </p>
+            
+            <div class="quote" style="font-size: 1.05rem; color: var(--text-muted); margin-bottom: 10px;">
+                "Some gifts are opened once... But remembered forever."
+            </div>
+            <div class="quote" style="color: var(--accent-rose); font-size: 1.2rem; font-weight: 500;">
+                "Your Smile Was Always Worth More Than Any Gift."
+            </div>
+        </div>
+    </section>
+
+    <section id="page6">
+        <div class="glass-card">
+            <div class="date-badge">27 September 2025</div>
+            <h2>Our First Call ❤️</h2>
+            
+            <div class="timestamp-display">18 Minutes 22 Seconds</div>
+
+            <p class="story-text" style="max-width: 580px; margin: 25px auto; text-align: left; text-align-last: left;">
+                Some memories don't become special because they are long...
+                They become special because of how they make us feel.
+                Our first call lasted only 18 minutes 22 seconds.
+                But those 18 minutes gave me a memory that I know I'll never forget.
+                <br><br>
+                I still remember asking... <span style="color: var(--text-light); font-weight:400;">"Sasu Maa kaisi hain?"</span>
+                <br>
+                You laughed... And replied... <span style="color: var(--text-light); font-weight:400;">"Abhi hamari shaadi kaha hui hai... to Sasur Jii kaise hue?"</span>
+                <br><br>
+                That little moment...
+                That little laugh...
+                Is still one of my favourite memories.
+                It wasn't just our first call...
+                It was the first time I felt that talking to you made everything around me feel lighter.
+                Maybe it was just 18 minutes...
+                But for me...
+                It became a memory for a lifetime. ❤️
+            </p>
+            
+            <div class="quote" style="text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
+                "Some conversations end... But their memories never do."
+            </div>
+        </div>
+    </section>
+
+    <section id="page7">
+        <canvas class="particles-layer" id="subtle-rain-canvas"></canvas>
+        <div class="glass-card">
+            <h2>❤️ Through Every Storm</h2>
+            
+            <div style="margin: 25px 0;">
+                <div id="heart-switch" class="heart-morphing">💔</div>
+                <div class="quote" style="font-size: 1.35rem; font-family: 'Cinzel', serif; letter-spacing: 2px; margin: 15px 0; color: #fff;">
+                    "Every Storm Made Us Stronger."
+                </div>
+                <div class="img-wrapper">
+                    <img src="priya_storm.jpg" alt="Priya Positive In Storm" class="premium-img">
+                </div>
+            </div>
+
+            <p class="story-text">
+                Every relationship has its own challenges. Ours had them too.
+                There were days filled with confusion.
+                There were moments when silence felt scary.
+                There was a time when your Instagram account was disabled...
+                And I wasn't using WhatsApp.
+                For a while...
+                I really thought I had lost you.
+                Those days weren't easy.
+                I missed talking to you.
+                I missed your messages.
+                And I kept hoping that one day everything would be alright again.
+                Looking back today...
+                I realize something beautiful...
+                Love isn't about never facing problems.
+                It's about never giving up on each other.
+                Every misunderstanding...
+                Every wait...
+                Every difficult moment...
+                Made this bond even stronger.
+                And today...
+                As we celebrate one beautiful year together...
+                I'm simply thankful...
+                That we never became just a memory. ❤️
+            </p>
+            
+            <div class="quote" style="color: var(--accent-blue); font-size: 1.1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
+                "The storm passed... But we stayed."
+            </div>
+        </div>
+    </section>
+
+    <section id="page8">
+        <div class="glass-card">
+            <div class="chapter-title">Our First Chapter ❤️</div>
+            <h2>Forever Begins Again</h2>
+            <div class="date-badge" style="color: var(--accent-rose);">21 July 2026</div>
+
+            <div class="img-wrapper" style="max-width: 290px;">
+                <img src="priya_best.jpg" alt="Priya Best Portrait Portrait" class="premium-img">
+            </div>
+            
+            <h3 style="font-size: 1.25rem; letter-spacing: 2px; margin: 15px 0; color: var(--text-light);">❤️ Happy First Anniversary ❤️</h3>
+
+            <p class="story-text">
+                One year. 365 days. Countless memories. Infinite smiles.
+                Looking back...
+                I don't remember every single conversation.
+                I don't remember every single day.
+                But I do remember...
+                How happy you made me feel.
+                Thank you...
+                For every smile.
+                For every laugh.
+                For every memory.
+                For every moment that became a part of my life.
+                I hope one day...
+                You'll proudly wear your white coat...
+                And everyone will call you... <span style="color: var(--text-light); font-weight: 500;">Dr. Priya. 👩‍⚕️</span>
+                And I hope...
+                No matter where life takes us...
+                We'll always have these memories.
+                Because this isn't just an anniversary...
+                It's a reminder...
+                That one beautiful year has passed...
+                And many more beautiful chapters are still waiting for us.
+                <br><br>
+                Happy First Anniversary, Madam Jii.
+                With all my love, Your Sir Jii ❤️
+            </p>
+
+            <div class="quote" style="font-size: 1.05rem; color: var(--accent-gold); max-width: 520px; margin: 25px auto; line-height: 1.7;">
+                "This is not the end... It's simply the end of... Our First Chapter. And the beginning of many more..."
+            </div>
+
+            <div class="video-container">
+                <p style="font-size: 0.8rem; letter-spacing: 3px; color: var(--accent-blue); margin-bottom: 20px; font-weight: 500; text-transform: uppercase;">Final Surprise For You</p>
+                <video class="video-element" controls preload="metadata">
+                    <source src="video1.mp4" type="video/mp4">
+                    Your browser does not support video playback.
+                </video>
+            </div>
+
+            <div class="bottom-tag" style="font-size: 0.75rem; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.03); padding-top: 25px;">
+                Made With Love ❤️ By Ansh
+            </div>
+        </div>
+    </section>
+
+    <section id="bonus-page">
+        <div class="glass-card" style="max-width: 600px; border: 1px dashed rgba(255,255,255,0.12); background: rgba(0,0,0,0.2);">
+            <div class="chapter-title" style="color: var(--accent-gold);">🔒 Future Chapter</div>
+            <h4 style="font-family: 'Cinzel', serif; font-size: 1.05rem; letter-spacing: 2px; margin-bottom: 20px; font-weight: 500;">Open When We Celebrate Our Second Anniversary...</h4>
+            
+            <div class="quote" style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;">
+                "I hope when you open this again next year, we'll be smiling together at how far we've come."
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Media Node Operations
+        const bgMusic = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        const musicText = document.getElementById('music-text');
+
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(err => console.log("Audio waiting for user initialization event"));
+                musicIcon.innerText = "⏸️";
+                musicText.innerText = "Pause Music";
+            } else {
+                bgMusic.pause();
+                musicIcon.innerText = "🎵";
+                musicText.innerText = "Play Song";
+            }
+        }
+
+        // Side Navigation Real-time Highlight Configuration
+        const sectionCollection = document.querySelectorAll('section');
+        const navigationDots = document.querySelectorAll('.dot');
+
+        window.addEventListener('scroll', () => {
+            let activeId = '';
+            sectionCollection.forEach(sec => {
+                const secTop = sec.offsetTop;
+                const secHeight = sec.clientHeight;
+                if (pageYOffset >= (secTop - secHeight / 3)) {
+                    activeId = sec.getAttribute('id');
+                }
+            });
+
+            sectionCollection.forEach((sec, idx) => {
+                if(sec.getAttribute('id') === activeId) {
+                    navigationDots.forEach(d => d.classList.remove('active'));
+                    navigationDots[idx].classList.add('active');
+                }
+            });
+        });
+
+        function jumpToSection(targetId, targetIdx) {
+            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+            navigationDots.forEach(d => d.classList.remove('active'));
+            navigationDots[targetIdx].classList.add('active');
+        }
+
+        // Heart Morphing Automation Engine (Page 7)
+        const targetHeartNode = document.getElementById('heart-switch');
+        if(targetHeartNode) {
+            setInterval(() => {
+                targetHeartNode.style.opacity = '0';
+                setTimeout(() => {
+                    targetHeartNode.innerText = (targetHeartNode.innerText === '💔') ? '❤️' : '💔';
+                    targetHeartNode.style.opacity = '1';
+                }, 400);
+            }, 3000);
+        }
+
+        // --- MICRO ANIMATION SYSTEMS ON CANVAS LAYER (HIGH END MINIMALISM) ---
+
+        // Canvas 1: Subtle Blue Floating Particles (Page 3)
+        const cP3 = document.getElementById('subtle-hearts-canvas');
+        const ctxP3 = cP3.getContext('2d');
+        let heartPool = [];
+
+        function adjustP3CanvasDimensions() {
+            cP3.width = cP3.parentElement.clientWidth;
+            cP3.height = cP3.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', adjustP3CanvasDimensions);
+        adjustP3CanvasDimensions();
+
+        class BubbleHeart {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * cP3.height;
+            }
+            reset() {
+                this.x = Math.random() * cP3.width;
+                this.y = cP3.height + 20;
+                this.scale = Math.random() * 7 + 5;
+                this.driftSpeed = Math.random() * 0.4 + 0.2;
+                this.alpha = Math.random() * 0.25 + 0.08;
+            }
+            render() {
+                ctxP3.fillStyle = `rgba(112, 148, 184, ${this.alpha})`;
+                ctxP3.font = `${this.scale}px Arial`;
+                ctxP3.fillText('❤️', this.x, this.y);
+            }
+            move() {
+                this.y -= this.driftSpeed;
+                if (this.y < -20) this.reset();
+            }
+        }
+        for(let i=0; i<16; i++) { heartPool.push(new BubbleHeart()); }
+
+        // Canvas 2: Gold Premium Particles (Page 5)
+        const cP5 = document.getElementById('gold-particles-canvas');
+        const ctxP5 = cP5.getContext('2d');
+        let goldPool = [];
+
+        function adjustP5CanvasDimensions() {
+            cP5.width = cP5.parentElement.clientWidth;
+            cP5.height = cP5.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', adjustP5CanvasDimensions);
+        adjustP5CanvasDimensions();
+
+        class GoldDust {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * cP5.height;
+            }
+            reset() {
+                this.x = Math.random() * cP5.width;
+                this.y = cP5.height + 10;
+                this.radius = Math.random() * 1.5 + 0.8;
+                this.speedY = Math.random() * 0.5 + 0.3;
+                this.alpha = Math.random() * 0.4 + 0.1;
+            }
+            render() {
+                ctxP5.beginPath();
+                ctxP5.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctxP5.fillStyle = `rgba(212, 175, 55, ${this.alpha})`;
+                ctxP5.fill();
+            }
+            move() {
+                this.y -= this.speedY;
+                if (this.y < -10) this.reset();
+            }
+        }
+        for(let i=0; i<25; i++) { goldPool.push(new GoldDust()); }
+
+        // Canvas 3: Micro Linear Rain Drop Movement (Page 7)
+        const cRain = document.getElementById('subtle-rain-canvas');
+        const ctxRain = cRain.getContext('2d');
+        let rainPool = [];
+
+        function adjustRainCanvasDimensions() {
+            cRain.width = cRain.parentElement.clientWidth;
+            cRain.height = cRain.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', adjustRainCanvasDimensions);
+        adjustRainCanvasDimensions();
+
+        class MicroDrop {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * cRain.height;
+            }
+            reset() {
+                this.x = Math.random() * cRain.width;
+                this.y = -20;
+                this.span = Math.random() * 12 + 10;
+                this.fallSpeed = Math.random() * 1.8 + 1.2;
+                this.alpha = Math.random() * 0.12 + 0.04;
+            }
+            render() {
+                ctxRain.strokeStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                ctxRain.lineWidth = 1;
+                ctxRain.beginPath();
+                ctxRain.moveTo(this.x, this.y);
+                ctxRain.lineTo(this.x, this.y + this.span);
+                ctxRain.stroke();
+            }
+            move() {
+                this.y += this.fallSpeed;
+                if (this.y > cRain.height) this.reset();
+            }
+        }
+        for(let i=0; i<35; i++) { rainPool.push(new MicroDrop()); }
+
+        // Integrated Render Engine Loop
+        function globalRenderEngine() {
+            ctxP3.clearRect(0, 0, cP3.width, cP3.height);
+            heartPool.forEach(h => { h.move(); h.render(); });
+
+            ctxP5.clearRect(0, 0, cP5.width, cP5.height);
+            goldPool.forEach(g => { g.move(); g.render(); });
+
+            ctxRain.clearRect(0, 0, cRain.width, cRain.height);
+            rainPool.forEach(r => { r.move(); r.render(); });
+
+            requestAnimationFrame(globalRenderEngine);
+        }
+        globalRenderEngine();
+    </script>
+</body>
+                                          </html>
