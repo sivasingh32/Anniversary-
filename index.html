@@ -1,36 +1,64 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Anniversary Priya ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&family=Playfair+Display:ital@1&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #ff4d6d;
-            --secondary: #c9184a;
-            --bg: #0a0a0a;
-            --glass: rgba(255, 255, 255, 0.1);
+            --pink-bg: #ffeef2;
+            --card-gradient: linear-gradient(135deg, #ffffff, #fff3f5);
+            --rose: #ff4d6d;
+            --ruby: #c9184a;
+            --shadow: 0 15px 40px rgba(255, 77, 109, 0.12);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
-            background-color: var(--bg);
-            color: white;
+            background-color: var(--pink-bg);
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
             height: 100vh;
             width: 100vw;
+            color: #4a4a4a;
         }
 
-        /* Background Stars */
-        #star-container { position: fixed; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: twinkle 3s infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        /* Background Particle System */
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-        /* Page Transitions */
-        .page {
+        .ambient-heart {
+            position: absolute;
+            color: rgba(255, 77, 109, 0.25);
+            font-size: 1.2rem;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) translateX(30px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Page Layout Engine */
+        .slide-page {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -39,401 +67,523 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 20px;
+            padding: 24px;
             z-index: 10;
         }
 
-        .page.active { display: flex; animation: fadeIn 0.8s forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Buttons */
-        .btn-continue {
-            margin-top: 30px;
-            padding: 12px 35px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 50px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
-            transition: 0.3s;
-            z-index: 100;
-        }
-        .btn-continue:active { transform: scale(0.9); }
-
-        /* Glass Cards */
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 400px;
+        .slide-page.active-view {
+            display: flex;
+            animation: cleanFade 0.6s ease-out forwards;
         }
 
-        /* Game: Catch Heart */
-        #heart-catcher { width: 50px; height: 50px; cursor: pointer; transition: 0.2s; position: absolute; font-size: 2.5rem; }
+        @keyframes cleanFade {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
-        /* Game: Tic Tac Toe */
-        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-        .ttt-cell { width: 80px; height: 80px; background: var(--glass); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; }
-
-        /* Balloon Pop */
-        .balloon { position: absolute; width: 60px; height: 80px; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; cursor: pointer; animation: floatUp 5s linear forwards; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-        @keyframes floatUp { from { transform: translateY(100vh); } to { transform: translateY(-20vh); } }
-
-        /* Cake */
-        .cake { font-size: 5rem; margin-bottom: 20px; position: relative; }
-        .candle { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; animation: flicker 0.5s infinite alternate; }
-        @keyframes flicker { from { opacity: 0.8; transform: translateX(-50%) scale(1); } to { opacity: 1; transform: translateX(-50%) scale(1.1); } }
-
-        /* Envelope Animation */
-        .envelope { width: 200px; height: 140px; background: #ff4d6d; position: relative; cursor: pointer; transition: 0.5s; margin-bottom: 50px; }
-        .envelope:before { content: ""; position: absolute; top: 0; left: 0; width: 0; height: 0; border-style: solid; border-width: 70px 100px 0 100px; border-color: #ff758f transparent transparent transparent; z-index: 2; transition: 0.5s; transform-origin: top; }
-        .envelope.open:before { transform: rotateX(180deg); }
-        .letter-paper { position: absolute; bottom: 0; left: 10px; width: 180px; height: 100px; background: white; z-index: 1; transition: 0.5s; color: black; font-size: 0.8rem; padding: 10px; }
-        .envelope.open .letter-paper { transform: translateY(-80px); height: 150px; }
-
-        /* Typewriter */
-        .typewriter { overflow: hidden; border-right: .15em solid orange; white-space: nowrap; margin: 0 auto; letter-spacing: .10em; animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite; }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: orange; } }
-
-        img { width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 4px solid var(--primary); margin-bottom: 20px; box-shadow: 0 0 20px var(--primary); }
-        
-        /* Video wrapper styling without default controls overlay hiding mechanism, natively standard video */
-        .video-wrapper {
+        /* Image Box - Fixed No Cut Guarantee */
+        .photo-holder {
             width: 100%;
             max-width: 320px;
-            margin: 20px 0;
-            border-radius: 15px;
+            height: 220px;
+            margin-bottom: 20px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 0 25px rgba(255, 77, 109, 0.4);
-            background: #000;
+            border: 3px solid #fff;
+            box-shadow: var(--shadow);
+            background: #fff;
         }
-        video {
+
+        .photo-holder img {
             width: 100%;
+            height: 100%;
+            object-fit: contain; /* Full photo layout visibility */
             display: block;
+        }
+
+        /* Luxury Actions Controllers */
+        .nav-action-btn {
+            margin-top: 25px;
+            padding: 13px 38px;
+            background: linear-gradient(45deg, var(--rose), var(--ruby));
+            border: none;
+            border-radius: 50px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(201, 24, 74, 0.3);
+            transition: transform 0.2s ease;
+            z-index: 100;
+        }
+
+        .nav-action-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Romantic Cards Setup */
+        .romantic-card-element {
+            background: var(--card-gradient);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 24px;
+            padding: 25px 20px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Target Node Game 1 */
+        #game-heart-node {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            position: absolute;
+            font-size: 3rem;
+            z-index: 999;
+            user-select: none;
+        }
+
+        /* Tic Tac Toe Board Matrix */
+        .ttt-matrix-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .ttt-matrix-cell {
+            width: 80px;
+            height: 80px;
+            background: #ffffff;
+            border: 2px solid #ffe3e8;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            cursor: pointer;
+        }
+
+        /* Balloon Elements */
+        .balloon-element {
+            position: absolute;
+            font-size: 3.2rem;
+            cursor: pointer;
+            user-select: none;
+            z-index: 50;
+            animation: balloonFloatUp 4.5s linear forwards;
+        }
+
+        @keyframes balloonFloatUp {
+            from { transform: translateY(105vh); }
+            to { transform: translateY(-20vh); }
+        }
+
+        /* Envelope Architecture */
+        .envelope-wrapper {
+            width: 210px;
+            height: 135px;
+            background: #ff5c7a;
+            position: relative;
+            cursor: pointer;
+            margin: 20px auto;
+            border-radius: 6px;
+        }
+
+        .envelope-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 0; height: 0;
+            border-style: solid;
+            border-width: 68px 105px 0 105px;
+            border-color: #ff859b transparent transparent transparent;
+            z-index: 5;
+            transform-origin: top;
+            transition: transform 0.4s ease;
+        }
+
+        .envelope-wrapper.is-open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .letter-content-sheet {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            width: 190px;
+            height: 95px;
+            background: #ffffff;
+            z-index: 3;
+            color: #2b2b2b;
+            padding: 12px 10px;
+            font-size: 0.75rem;
+            text-align: left;
+            border-radius: 4px;
+            transition: transform 0.4s ease;
+        }
+
+        .envelope-wrapper.is-open .letter-content-sheet {
+            transform: translateY(-75px);
+            height: 145px;
+        }
+
+        /* Cake setup */
+        .cake-holder { font-size: 5.5rem; margin: 15px 0; position: relative; display: inline-block; }
+        .flame-tip { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; animation: flicker 0.3s infinite alternate; }
+        @keyframes flicker { from { opacity: 0.8; } to { opacity: 1; } }
+
+        /* Typography styling shortcuts */
+        .script-title { font-family: 'Dancing Script', cursive; font-size: 2.4rem; color: var(--rose); }
+        .card-desc { font-size: 0.92rem; color: #5a5a66; line-height: 1.6; margin-top: 10px; }
+
+        /* Full Immersive Video Layout */
+        .fullscreen-video-enclosure {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000000;
+            z-index: 1000;
+        }
+
+        .fullscreen-video-node {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .bottom-tagline {
+            position: absolute;
+            bottom: 25px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.6);
+            z-index: 1001;
         }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" src="tere-liye.mp3" loop></audio>
-    <div id="star-container"></div>
+    <audio id="bg-audio-player" src="tere-liye.mp3" loop></audio>
+    <div id="hearts-container"></div>
 
-    <!-- PAGE 1: Intro -->
-    <div class="page active" id="p1">
-        <img src="priya1.jpg" alt="Priya">
-        <h1 style="font-family: 'Cinzel';">Happy Anniversary</h1>
-        <h2 style="color: var(--primary);">Cutiepie</h2>
-        <p style="margin-top: 15px; font-weight: 300;">A little surprise made with love...</p>
-        <button class="btn-continue" onclick="nextPage(1)">Open Your Surprise 🎁</button>
+    <div class="slide-page active-view" id="p1">
+        <div style="font-size: 4rem; margin-bottom: 10px;">🐼</div>
+        <h1 class="script-title">Happy Anniversary</h1>
+        <h2 style="font-size: 1.4rem; font-weight: 500; color: #333;">My Cutiepie Priya</h2>
+        <p class="card-desc">A beautiful page-by-page romantic memory timeline built for you.</p>
+        <button class="nav-action-btn" onclick="goToNextSlide(1)">Open Your Surprise 🎁</button>
     </div>
 
-    <!-- PAGE 2: Counter -->
-    <div class="page" id="p2">
-        <div class="glass-card">
-            <h3>We've been together for</h3>
-            <h1 style="font-size: 4rem; color: var(--primary); margin: 20px 0;">365</h1>
-            <h3>Days and counting...</h3>
+    <div class="slide-page" id="p2">
+        <div class="romantic-card-element">
+            <h3 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--rose);">Together Journey</h3>
+            <h1 style="font-size: 5.5rem; color: var(--ruby); font-weight: 700;">365</h1>
+            <h3 style="font-size: 1.1rem; font-weight: 500;">Days of Love & Happiness</h3>
         </div>
-        <button class="btn-continue" onclick="nextPage(2)">Continue Our Story 💫</button>
+        <button class="nav-action-btn" onclick="goToNextSlide(2)">See Our Timeline 💫</button>
     </div>
 
-    <!-- PAGE 3: Heart Catch Game -->
-    <div class="page" id="p3">
-        <h2>First, Catch my Heart ❤️</h2>
-        <p>Tap the floating heart 5 times to unlock!</p>
-        <p id="catch-status" style="color: var(--primary); font-weight: 600; margin: 10px 0;">Caught: 0/5</p>
-        <div id="heart-catcher" onclick="catchHeart()">❤️</div>
+    <div class="slide-page" id="p3">
+        <h2>First, catch my heart ❤️</h2>
+        <p class="card-desc" style="margin-bottom: 15px;">Tap the heart node 5 times sequentially to unlock the story slides.</p>
+        <div id="click-score-board" style="color: var(--ruby); font-weight: 600;">Score Matrix: 0/5</div>
+        <div id="game-heart-node" onclick="handleHeartNodeClick()">❤️</div>
     </div>
 
-    <!-- PAGE 4: 18 July -->
-    <div class="page" id="p4">
-        <img src="priya2.jpg">
-        <div class="glass-card">
-            <h3>18 July 2025</h3>
-            <p>"Just one 'Hi' on Instagram changed everything. I never knew a stranger would become my world."</p>
+    <div class="slide-page" id="p4">
+        <div class="photo-holder"><img src="priya1.jpg" alt="Memory Slide 1"></div>
+        <div class="romantic-card-element">
+            <h3 style="color: var(--rose);">18 July 2025</h3>
+            <p class="card-desc">"Just one single 'Hi' on Instagram changed everything. I never knew a stranger would become my absolute world."</p>
         </div>
-        <button class="btn-continue" onclick="nextPage(4)">Next Memory</button>
+        <button class="nav-action-btn" onclick="goToNextSlide(4)">Next Memory</button>
     </div>
 
-    <!-- PAGE 5: 20 July -->
-    <div class="page" id="p5">
-        <img src="priya3.jpg">
-        <div class="glass-card">
+    <div class="slide-page" id="p5">
+        <div class="photo-holder"><img src="priya2.jpg" alt="Memory Slide 2"></div>
+        <div class="romantic-card-element">
             <h3>20 July 2025</h3>
-            <p>"My heart started waiting for your notifications. I was falling, quietly but deeply."</p>
+            <p class="card-desc">"My heart started waiting entirely for your notifications. I was falling for you, quietly but deeply."</p>
         </div>
-        <button class="btn-continue" onclick="nextPage(5)">What happened next?</button>
+        <button class="nav-action-btn" onclick="goToNextSlide(5)">What happened next?</button>
     </div>
 
-    <!-- PAGE 6: 21 July -->
-    <div class="page" id="p6">
-        <img src="priya4.jpg">
-        <div class="glass-card">
-            <h3>21 July 2025</h3>
-            <h2 style="color: var(--primary);">The Day of 'Us'</h2>
-            <p>"The day you said those three words. My life found its meaning."</p>
+    <div class="slide-page" id="p6">
+        <div class="photo-holder"><img src="priya3.jpg" alt="Memory Slide 3"></div>
+        <div class="romantic-card-element" style="border-color: var(--rose);">
+            <h2 style="color: var(--ruby); font-size: 1.3rem;">The Day of 'Us' ❤️</h2>
+            <h3 style="font-size: 0.95rem; margin-top: 3px; color: #555;">21 July 2025</h3>
+            <p class="card-desc">"The exact day you said those three magical words. My complete life found its permanent meaning."</p>
         </div>
-        <button class="btn-continue" onclick="nextPage(6)">Keep Going</button>
+        <button class="nav-action-btn" onclick="goToNextSlide(6)">Keep Going</button>
     </div>
 
-    <!-- PAGE 7: Tic Tac Toe Game -->
-    <div class="page" id="p7">
-        <h3>Win my Heart again? 🎮</h3>
-        <div class="ttt-grid" id="ttt-grid">
-            <div class="ttt-cell" onclick="playTTT(0)"></div>
-            <div class="ttt-cell" onclick="playTTT(1)"></div>
-            <div class="ttt-cell" onclick="playTTT(2)"></div>
-            <div class="ttt-cell" onclick="playTTT(3)"></div>
-            <div class="ttt-cell" onclick="playTTT(4)"></div>
-            <div class="ttt-cell" onclick="playTTT(5)"></div>
-            <div class="ttt-cell" onclick="playTTT(6)"></div>
-            <div class="ttt-cell" onclick="playTTT(7)"></div>
-            <div class="ttt-cell" onclick="playTTT(8)"></div>
+    <div class="slide-page" id="p7">
+        <h2 style="font-size: 1.25rem;">Win my Heart again? 🎮</h2>
+        <p class="card-desc">Click empty space slots to log a romantic token entry.</p>
+        <div class="ttt-matrix-board">
+            <div class="ttt-matrix-cell" onclick="processTTTSelection(0)"></div>
+            <div class="ttt-matrix-cell" onclick="processTTTSelection(1)"></div>
+            <div class="ttt-matrix-cell" onclick="processTTTSelection(2)"></div>
+            <div class="ttt-matrix-cell" onclick="processTTTSelection(3)"></div>
+            <div class="ttt-matrix-cell" onclick="processTTTSelection(4)"></div>
+            <div class="ttt-matrix-cell" onclick="processTTTSelection(5)"></div>
+            <div class="ttt-matrix-cell" onclick="processTTTSelection(6)"></div>
+            <div class="ttt-matrix-cell" onclick="processTTTSelection(7)"></div>
+            <div class="ttt-matrix-cell" onclick="processTTTSelection(8)"></div>
         </div>
-        <p id="ttt-status" style="margin-top: 15px; color: var(--primary);">Tap a box to start!</p>
+        <div id="ttt-panel-alert" style="margin-top: 15px; color: var(--rose); font-weight: 500;">Click blocks to start</div>
     </div>
 
-    <!-- PAGE 8: 26 Sept -->
-    <div class="page" id="p8">
-        <div class="glass-card">
-            <h3>26 Sept 2025 🎁</h3>
-            <p>"Our first gift wasn't about the dress. It was about seeing that priceless smile on your face."</p>
+    <div class="slide-page" id="p8">
+        <div class="romantic-card-element">
+            <div style="font-size: 3rem; margin-bottom: 5px;">🎁</div>
+            <h3 style="color: var(--rose);">26 September 2025</h3>
+            <p class="card-desc">"Our first gift wasn't about the dress selection. It was entirely about capturing that priceless, beautiful smile on your face."</p>
         </div>
-        <button class="btn-continue" onclick="nextPage(8)">Next</button>
+        <button class="nav-action-btn" onclick="goToNextSlide(8)">Next Memory</button>
     </div>
 
-    <!-- PAGE 9: 27 Sept Call -->
-    <div class="page" id="p9">
-        <div class="glass-card">
-            <h3>27 Sept 2025 📞</h3>
-            <p>"18 Minutes & 22 Seconds. 'Sasu Maa kaisi hain?' I still remember your laugh on our first call."</p>
+    <div class="slide-page" id="p9">
+        <div class="romantic-card-element" style="border-left: 4px solid var(--rose);">
+            <h3 style="color: var(--ruby);">27 September 2025 📞</h3>
+            <h4 style="font-size: 0.95rem; margin-top: 4px; color: #333;">18 Minutes & 22 Seconds First Call</h4>
+            <p class="card-desc" style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--ruby); margin: 8px 0;">"Sasu Maa kaisi hain?"</p>
+            <p class="card-desc">I still remember your laugh on our very first phone call timeline session conversation.</p>
         </div>
-        <button class="btn-continue" onclick="nextPage(9)">Next</button>
+        <button class="nav-action-btn" onclick="goToNextSlide(9)">Next Step</button>
     </div>
 
-    <!-- PAGE 10: Balloon Pop Game -->
-    <div class="page" id="p10">
-        <h3>Pop the Balloons! 🎈</h3>
-        <p>Pop 10 balloons to see the special messages!</p>
-        <p id="balloon-count" style="color: var(--primary); font-weight: 600; margin: 10px 0;">Popped: 0/10</p>
-        <div id="balloon-container"></div>
+    <div class="slide-page" id="p10">
+        <h2>Pop the Balloons! 🎈</h2>
+        <p class="card-desc">Burst 10 colorful flying items to process structural anniversary lines.</p>
+        <div id="balloon-score-reporter" style="color: var(--ruby); font-weight: 600; margin: 10px 0;">Popped blocks: 0/10</div>
+        <div id="balloon-playground-view"></div>
     </div>
 
-    <!-- PAGE 11: Storm -->
-    <div class="page" id="p11">
-        <div class="glass-card" style="border-color: #00b4d8;">
-            <h3>Through Every Storm ⛈️</h3>
-            <p>"Instagram disabled, distance, silence... we faced it all. But we never let go."</p>
+    <div class="slide-page" id="p11">
+        <div class="romantic-card-element" style="background: #fff0f3;">
+            <h3 style="color: #d90429;">Through Every Storm ⛈️</h3>
+            <p class="card-desc">"Instagram account disabled, distance parameters, heavy silent phases... we survived all weights gracefully because we chose never to let go."</p>
         </div>
-        <button class="btn-continue" onclick="nextPage(11)">Next</button>
+        <button class="nav-action-btn" onclick="goToNextSlide(11)">Open Mini Gallery</button>
     </div>
 
-    <!-- PAGE 12: Mini Gallery -->
-    <div class="page" id="p12">
-        <h3>A Gallery of You ❤️</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
-            <img src="priya1.jpg" style="width: 110px; height: 110px; margin-bottom: 0;">
-            <img src="priya2.jpg" style="width: 110px; height: 110px; margin-bottom: 0;">
-            <img src="priya3.jpg" style="width: 110px; height: 110px; margin-bottom: 0;">
-            <img src="priya4.jpg" style="width: 110px; height: 110px; margin-bottom: 0;">
+    <div class="slide-page" id="p12">
+        <h2 style="font-size: 1.3rem; margin-bottom: 15px; color: var(--ruby);">A Gallery of You ❤️</h2>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 320px; width: 100%;">
+            <div style="border-radius:15px; overflow:hidden; border:2px solid #fff; height:95px;"><img src="priya1.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div style="border-radius:15px; overflow:hidden; border:2px solid #fff; height:95px;"><img src="priya2.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div style="border-radius:15px; overflow:hidden; border:2px solid #fff; height:95px;"><img src="priya3.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div style="border-radius:15px; overflow:hidden; border:2px solid #fff; height:95px;"><img src="priya4.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
         </div>
-        <button class="btn-continue" onclick="nextPage(12)">The Letter</button>
+        <button class="nav-action-btn" onclick="goToNextSlide(12)">Open Letter ✉️</button>
     </div>
 
-    <!-- PAGE 13: Envelope Note -->
-    <div class="page" id="p13">
-        <h3>A Heartfelt Note ✉️</h3>
-        <div class="envelope" id="envelope" onclick="openEnvelope()">
-            <div class="letter-paper">
-                <p>Dear Priya,</p>
-                <p style="font-size: 0.65rem; margin-top: 5px; line-height: 1.3;">One year. 365 days of pure happiness. Thank you for being mine. I love you more than words can say...</p>
+    <div class="slide-page" id="p13">
+        <h2>A Private Heartfelt Note ✉️</h2>
+        <div class="envelope-wrapper" id="envelope-element-node" onclick="triggerEnvelopeOpen()">
+            <div class="letter-content-sheet">
+                <p style="font-weight: 600; color: var(--ruby);">Dear Priya,</p>
+                <p style="font-size: 0.68rem; margin-top: 5px; line-height: 1.4; color: #444;">One year. 365 days of absolute pure happiness. Thank you for being mine. I love you much more than simple words can ever convey...</p>
             </div>
         </div>
-        <p id="env-text" style="color: var(--primary);">Tap to open</p>
-        <button class="btn-continue" id="env-btn" style="display:none" onclick="nextPage(13)">Final Surprise</button>
+        <p id="envelope-status-alert" style="color: var(--rose); font-size: 0.9rem;">Tap to open letter node</p>
     </div>
 
-    <!-- PAGE 14: Typewriter Note -->
-    <div class="page" id="p14">
-        <div class="glass-card">
-            <p class="typewriter" style="font-family: 'Dancing Script'; font-size: 1.5rem; color: var(--primary);">"Choosing you was the best decision."</p>
-            <p style="margin-top: 20px; line-height: 1.6;">You are my Madam Ji, my Dr. Priya, my everything.</p>
+    <div class="slide-page" id="p14">
+        <div class="romantic-card-element" style="padding: 35px 20px;">
+            <p style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--ruby); line-height: 1.4;">"Choosing you was the best decision I ever made."</p>
+            <p class="card-desc" style="margin-top: 15px; font-weight: 500;">You are my Madam Ji, my future Dr. Priya 👩‍⚕️, my whole world.</p>
         </div>
-        <button class="btn-continue" onclick="nextPage(14)">Next</button>
+        <button class="nav-action-btn" onclick="goToNextSlide(14)">Next</button>
     </div>
 
-    <!-- PAGE 15: Cake Cuttings -->
-    <div class="page" id="p15">
-        <h3>Happy 1st Anniversary! 🎂</h3>
-        <div class="cake">
-            <div class="candle">🕯️</div>
+    <div class="slide-page" id="p15">
+        <h2 style="font-size: 1.4rem;">Happy 1st Anniversary! 🎂</h2>
+        <p class="card-desc">Make a beautiful wish, Madam Ji!</p>
+        <div class="cake-holder">
+            <div class="flame-tip">🕯️</div>
             🎂
         </div>
-        <p>Make a wish, Madam Ji!</p>
-        <button class="btn-continue" onclick="nextPage(15)">Final Surprise ❤️</button>
+        <br>
+        <button class="nav-action-btn" onclick="goToNextSlide(15)">Final Surprise ❤️</button>
     </div>
 
-    <!-- PAGE 16: Video Surprise & Audio Stop Management -->
-    <div class="page" id="p16">
-        <h3>A Final Surprise for You 🎥</h3>
-        <div class="video-wrapper">
-            <!-- Automatically plays, plays audio, controls enabled but custom overlay layers removed -->
-            <video id="finalVideo" autoplay playsinline>
+    <div class="slide-page" id="p16" style="padding: 0; background: #000;">
+        <div class="fullscreen-video-enclosure">
+            <video id="native-video-node" playsinline>
                 <source src="video1.mp4" type="video/mp4">
             </video>
+            <div class="bottom-tagline">Forever Yours, Ansh ❤️</div>
         </div>
-        <p>Forever Yours, Ansh ❤️</p>
-        <p style="font-size: 0.7rem; margin-top: 15px; opacity: 0.6;">Made with ❤️ by Ansh</p>
     </div>
 
     <script>
-        let currentPage = 1;
-        const music = document.getElementById('bgMusic');
-        const finalVideo = document.getElementById('finalVideo');
+        let currentActivePageIndex = 1;
+        const mainAudioNode = document.getElementById('bg-audio-player');
+        const embeddedVideoPlayer = document.getElementById('native-video-node');
 
-        // Star Particles Generator
-        const container = document.getElementById('star-container');
-        for (let i = 0; i < 80; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = star.style.height = Math.random() * 3 + 'px';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 3 + 's';
-            container.appendChild(star);
+        // Continuous Flowing Decorative Hearts Layer Engine
+        const heartsContainerElement = document.getElementById('hearts-container');
+        function spawnDecorativeHeart() {
+            if (currentActivePageIndex === 16) return;
+            const heart = document.createElement('div');
+            heart.className = 'ambient-heart';
+            heart.innerText = Math.random() > 0.5 ? '❤️' : '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            const scaleFactor = Math.random() * 0.5 + 0.6;
+            heart.style.transform = `scale(${scaleFactor})`;
+            
+            const animationDuration = Math.random() * 3 + 4; 
+            heart.style.animationDuration = animationDuration + 's';
+            
+            heartsContainerElement.appendChild(heart);
+            setTimeout(() => heart.remove(), animationDuration * 1000);
         }
+        setInterval(spawnDecorativeHeart, 350);
 
-        function nextPage(num) {
-            if (num === 1) {
-                music.play().catch(e => console.log("Audio initialized after click"));
+        // Core Controller Navigation Sequence Switcher
+        function goToNextSlide(originNumber) {
+            if (originNumber === 1) {
+                mainAudioNode.play().catch(() => console.log("Audio matrix setup waiting activation"));
             }
             
-            document.getElementById('p' + num).classList.remove('active');
-            currentPage = num + 1;
-            document.getElementById('p' + currentPage).classList.add('active');
+            document.getElementById('p' + originNumber).classList.remove('active-view');
+            currentActivePageIndex = originNumber + 1;
+            document.getElementById('p' + currentActivePageIndex).classList.add('active-view');
             
-            if (currentPage === 3) startHeartGame();
-            if (currentPage === 10) startBalloonGame();
+            if (currentActivePageIndex === 3) initHeartGamePanel();
+            if (currentActivePageIndex === 10) initBalloonGamePanel();
             
-            // Critical Step: If transitioning to Page 16, stop background music and play video
-            if (currentPage === 16) {
-                music.pause();
-                finalVideo.currentTime = 0;
-                finalVideo.play().catch(e => console.log("Video auto-play handled"));
+            // AUTOMATIC MUSIC PAUSE SEQUENCE SWITCH: When landing on page 16, instantly turn off audio player track and play full-screen cinematic video file
+            if (currentActivePageIndex === 16) {
+                mainAudioNode.pause();
+                embeddedVideoPlayer.currentTime = 0;
+                embeddedVideoPlayer.play().catch(e => console.log("Direct full screen rendering active"));
             }
         }
 
-        // --- Heart Catcher Logic ---
-        let caughtCount = 0;
-        function startHeartGame() {
-            moveHeart();
+        // --- Game System 1: Heart Target Vector Controller ---
+        let currentHeartClicks = 0;
+        function initHeartGamePanel() {
+            relocateHeartNodeRandomly();
         }
-        function moveHeart() {
-            const h = document.getElementById('heart-catcher');
-            h.style.left = Math.random() * 75 + 10 + '%';
-            h.style.top = Math.random() * 70 + 15 + '%';
+        function relocateHeartNodeRandomly() {
+            const heartNode = document.getElementById('game-heart-node');
+            heartNode.style.left = Math.random() * 75 + 10 + '%';
+            heartNode.style.top = Math.random() * 60 + 20 + '%';
         }
-        function catchHeart() {
-            caughtCount++;
-            document.getElementById('catch-status').innerText = `Caught: ${caughtCount}/5`;
-            if (caughtCount >= 5) {
-                const p3 = document.getElementById('p3');
-                if(!document.getElementById('heart-btn')) {
-                    const btn = document.createElement('button');
-                    btn.id = 'heart-btn';
-                    btn.className = 'btn-continue';
-                    btn.innerText = 'Memory Unlocked! 🔓';
-                    btn.onclick = () => nextPage(3);
-                    p3.appendChild(btn);
+        function handleHeartNodeClick() {
+            currentHeartClicks++;
+            document.getElementById('click-score-board').innerText = `Caught: ${currentHeartClicks}/5`;
+            if (currentHeartClicks >= 5) {
+                const step3View = document.getElementById('p3');
+                if(!document.getElementById('heart-game-done-btn')) {
+                    const nextBtn = document.createElement('button');
+                    nextBtn.id = 'heart-game-done-btn';
+                    nextBtn.className = 'nav-action-btn';
+                    nextBtn.innerText = 'Memory Unlocked! 🔓';
+                    nextBtn.onclick = () => goToNextSlide(3);
+                    step3View.appendChild(nextBtn);
                 }
-                document.getElementById('heart-catcher').style.display = 'none';
+                document.getElementById('game-heart-node').style.display = 'none';
             } else {
-                moveHeart();
+                relocateHeartNodeRandomly();
             }
         }
 
-        // --- Tic Tac Toe Logic (Romantic Automatic Mode) ---
-        let tttBoard = Array(9).fill(null);
-        function playTTT(i) {
-            if (tttBoard[i]) return;
-            tttBoard[i] = '❤️';
-            document.querySelectorAll('.ttt-cell')[i].innerText = '❤️';
+        // --- Game System 2: Automatic Tic Tac Toe Matrix ---
+        let matrixTrackArray = Array(9).fill(null);
+        function processTTTSelection(index) {
+            if (matrixTrackArray[index]) return;
+            matrixTrackArray[index] = '❤️';
+            document.querySelectorAll('.ttt-matrix-cell')[index].innerText = '❤️';
             
-            if (tttBoard.filter(x => x).length >= 3) {
-                document.getElementById('ttt-status').innerText = "You Win! (Ansh always lets you win ❤️)";
+            if (matrixTrackArray.filter(i => i).length >= 3) {
+                document.getElementById('ttt-panel-alert').innerText = "You Win! (Ansh always lets you win ❤️)";
                 setTimeout(() => {
-                    if (!document.getElementById('ttt-btn')) {
-                        const btn = document.createElement('button');
-                        btn.id = 'ttt-btn';
-                        btn.className = 'btn-continue';
-                        btn.innerText = 'Continue Journey';
-                        btn.onclick = () => nextPage(7);
-                        document.getElementById('p7').appendChild(btn);
+                    if (!document.getElementById('matrix-done-btn')) {
+                        const nextBtn = document.createElement('button');
+                        nextBtn.id = 'matrix-done-btn';
+                        nextBtn.className = 'nav-action-btn';
+                        nextBtn.innerText = 'Relive Memories';
+                        nextBtn.onclick = () => goToNextSlide(7);
+                        document.getElementById('p7').appendChild(nextBtn);
                     }
-                }, 600);
+                }, 400);
             }
         }
 
-        // --- Balloon Pop Logic ---
-        let popped = 0;
-        const balloonTexts = [
+        // --- Game System 3: Balloon Burst Interactivity Engine ---
+        let balloonPoppedAccumulator = 0;
+        const textStringsPool = [
             "Happy Anniversary!", "I Love You Priya", "You Are My Everything", 
-            "My Doctor Priya 👩‍⚕️", "Madam Ji ❤️", "365 Days of Love", 
+            "Dr. Priya 👩‍⚕️", "Madam Ji ❤️", "365 Days of Pure Love", 
             "Forever To Go", "My Cutiepie", "Ansh ❤️ Priya", "You Smile, I Smile"
         ];
-        
-        function startBalloonGame() {
-            const container = document.getElementById('balloon-container');
-            const interval = setInterval(() => {
-                if (popped >= 10 || currentPage !== 10) { clearInterval(interval); return; }
-                const b = document.createElement('div');
-                b.className = 'balloon';
-                b.style.left = Math.random() * 80 + 5 + '%';
-                b.style.background = `hsl(${Math.random() * 360}, 75%, 65%)`;
-                b.innerText = "🎈";
+
+        function initBalloonGamePanel() {
+            const playground = document.getElementById('balloon-playground-view');
+            const loopEngine = setInterval(() => {
+                if (balloonPoppedAccumulator >= 10 || currentActivePageIndex !== 10) { 
+                    clearInterval(loopEngine); 
+                    return; 
+                }
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon-element';
+                balloon.style.left = Math.random() * 80 + 5 + '%';
+                balloon.innerText = "🎈";
                 
-                b.onclick = function() {
-                    this.style.transform = 'scale(1.4)';
+                balloon.onclick = function() {
+                    this.style.transform = 'scale(0)';
                     this.style.opacity = '0';
-                    this.style.transition = '0.2s';
+                    this.style.transition = 'all 0.2s ease';
                     
-                    // Show message pop animation text
-                    const msgIndex = popped % balloonTexts.length;
-                    document.getElementById('balloon-count').innerText = balloonTexts[msgIndex];
+                    const computationalIdx = balloonPoppedAccumulator % textStringsPool.length;
+                    document.getElementById('balloon-score-reporter').innerText = textStringsPool[computationalIdx];
                     
-                    popped++;
+                    balloonPoppedAccumulator++;
                     setTimeout(() => this.remove(), 200);
                     
-                    if (popped >= 10) {
-                        clearInterval(interval);
+                    if (balloonPoppedAccumulator >= 10) {
+                        clearInterval(loopEngine);
                         setTimeout(() => {
                             const p10 = document.getElementById('p10');
-                            p10.innerHTML = `<h2 style='color:var(--primary); margin-bottom:15px;'>Happy Anniversary Priya! 🎈</h2><p>All balloons popped perfectly!</p>`;
-                            const btn = document.createElement('button');
-                            btn.className = 'btn-continue';
-                            btn.innerText = 'Next';
-                            btn.onclick = () => nextPage(10);
-                            p10.appendChild(btn);
-                        }, 800);
+                            p10.innerHTML = `<h2 style='color:var(--ruby); margin-bottom:12px;'>Happy Anniversary Priya! 🎈</h2><p class='card-desc'>All anniversary message items popped successfully!</p>`;
+                            const nextBtn = document.createElement('button');
+                            nextBtn.className = 'nav-action-btn';
+                            nextBtn.innerText = 'Next';
+                            nextBtn.onclick = () => goToNextSlide(10);
+                            p10.appendChild(nextBtn);
+                        }, 500);
                     }
                 };
-                container.appendChild(b);
-            }, 900);
+                playground.appendChild(balloon);
+            }, 850);
         }
 
-        // --- Envelope Opening ---
-        function openEnvelope() {
-            const env = document.getElementById('envelope');
-            env.classList.add('open');
-            document.getElementById('env-text').style.display = 'none';
-            document.getElementById('env-btn').style.display = 'inline-block';
+        // --- Mail Unfold Mechanics Routine ---
+        function triggerEnvelopeOpen() {
+            const wrapperNode = document.getElementById('envelope-element-node');
+            wrapperNode.classList.add('is-open');
+            document.getElementById('envelope-status-alert').style.display = 'none';
+            
+            setTimeout(() => {
+                if (!document.getElementById('mail-done-btn')) {
+                    const nextBtn = document.createElement('button');
+                    nextBtn.id = 'mail-done-btn';
+                    nextBtn.className = 'nav-action-btn';
+                    nextBtn.innerText = 'Final Surprise';
+                    nextBtn.onclick = () => goToNextSlide(13);
+                    document.getElementById('p13').appendChild(nextBtn);
+                }
+            }, 400);
         }
     </script>
 </body>
-                </html>
+ </html>
